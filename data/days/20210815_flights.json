@@ -1,0 +1,26 @@
+[
+  {
+    "flight_id": 684284307,
+    "aircraft_id": 4958540,
+    "reg": "TCJJL",
+    "equip": "B77W",
+    "callsign": "THY97E",
+    "flight": "TK706",
+    "schd_from": "IST",
+    "schd_to": "KBL",
+    "real_to": "KBL",
+    "reserved": ""
+  },
+  {
+    "flight_id": 684304472,
+    "aircraft_id": 9003963,
+    "reg": "A6FEY",
+    "equip": "B738",
+    "callsign": "FDB301",
+    "flight": "FZ301",
+    "schd_from": "DXB",
+    "schd_to": "KBL",
+    "real_to": "KBL",
+    "reserved": ""
+  }
+]
