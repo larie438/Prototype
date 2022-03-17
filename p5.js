@@ -7,6 +7,10 @@ let bg;
 
 let dayArray = [];
 let flightArray = [];
+let pointCount = 0;
+
+let daySelector = 0;
+let flightSelector = 0;
 
 const edges = {
     minLong: 68.482095,
@@ -71,12 +75,12 @@ function setup() {
     //   background(0);
 
     console.log(allFlights)
-    getFlightData("20210815", "684304472")
-    //   getFlightData("20210815","684284307")
+    // getFlightData("20210815", "684304472")
+    // getFlightData("20210815","684284307")
 
     // noLoop()
 }
-let pointCount = 0;
+
 
 //2d array
 for (var day in allFlights) {
@@ -93,6 +97,20 @@ for (let i = 0; i < dayArray.length; i++) {
             flightArray[i].push(flights);
         }
     }
+}
+
+function mousePressed(){
+    if(flightSelector < flightArray[daySelector].length-1){
+        flightSelector++;
+        console.log(flightSelector);
+    }
+    else{
+        flightSelector = 0
+        if (daySelector < dayArray.length-1){
+            daySelector++;
+        }
+    }
+    getFlightData(dayArray[daySelector], flightArray[daySelector][flightSelector]);
 }
 
 function draw() {
