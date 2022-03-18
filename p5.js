@@ -1,6 +1,3 @@
-
-
-
 const mapWidth = 1000;
 const mapHeight = 600;
 let bg;
@@ -78,35 +75,36 @@ function setup() {
     // getFlightData("20210815", "684304472")
     // getFlightData("20210815","684284307")
 
+    
     // noLoop()
-}
 
+    //2d array
+    for (var day in allFlights) {
+        if (allFlights.hasOwnProperty(day)) {
+            console.log(day + " -> " + allFlights[day]);
+            dayArray.push(day);
 
-//2d array
-for (var day in allFlights) {
-    if (allFlights.hasOwnProperty(day)) {
-        console.log(day + " -> " + allFlights[day]);
-        dayArray.push(day);
-
-    }
-}
-for (let i = 0; i < dayArray.length; i++) {
-    flightArray[i] = [];
-    for (var flights in allFlights[dayArray[i]]['flights']) {
-        if (allFlights[dayArray[i]]['flights'].hasOwnProperty(flights)) {
-            flightArray[i].push(flights);
         }
     }
+    for (let i = 0; i < dayArray.length; i++) {
+        flightArray[i] = [];
+        for (var flights in allFlights[dayArray[i]]['flights']) {
+            if (allFlights[dayArray[i]]['flights'].hasOwnProperty(flights)) {
+                flightArray[i].push(flights);
+            }
+        }
+    }
+
 }
 
-function mousePressed(){
-    if(flightSelector < flightArray[daySelector].length-1){
+
+function mousePressed() {
+    if (flightSelector < flightArray[daySelector].length - 1) {
         flightSelector++;
         console.log(flightSelector);
-    }
-    else{
+    } else {
         flightSelector = 0
-        if (daySelector < dayArray.length-1){
+        if (daySelector < dayArray.length - 1) {
             daySelector++;
         }
     }
@@ -140,8 +138,7 @@ function draw() {
 
 
             endShape()
-        }
-        else {
+        } else {
             pointCount = 0;
         }
     }
