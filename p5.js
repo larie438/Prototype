@@ -95,21 +95,30 @@ function setup() {
         }
     }
 
+    
 }
 
 
-function mousePressed() {
-    if (flightSelector < flightArray[daySelector].length - 1) {
-        flightSelector++;
-        console.log(flightSelector);
-    } else {
-        flightSelector = 0
-        if (daySelector < dayArray.length - 1) {
-            daySelector++;
-        }
-    }
-    getFlightData(dayArray[daySelector], flightArray[daySelector][flightSelector]);
-}
+// function mousePressed() {
+//     if (flightSelector < flightArray[daySelector].length - 1) {
+//         flightSelector++;
+//         console.log(flightSelector);
+//     } else {
+//         flightSelector = 0
+//         if (daySelector < dayArray.length - 1) {
+//             daySelector++;
+//         }
+//     }
+//     getFlightData(dayArray[daySelector], flightArray[daySelector][flightSelector]);
+// }
+
+// for(let flightSelector = 0; flightSelector < flightArray[daySelector].length - 1; flightSelector++){
+//     getFlightData(dayArray[daySelector], flightArray[daySelector][flightSelector]);
+// }
+
+
+
+
 
 function draw() {
     background(bg);
@@ -142,5 +151,12 @@ function draw() {
             pointCount = 0;
         }
     }
+ for (let daySelector = 0; daySelector < dayArray.length; daySelector++) {
+        for (let flightSelector = 0; flightSelector < flightArray[daySelector].length; flightSelector++) {
+          getFlightData(dayArray[daySelector], flightArray[daySelector][flightSelector]);
+        }
+       
+      }
+
 
 }
