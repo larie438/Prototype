@@ -61,21 +61,23 @@ function preload() {
 
 function getFlightData(day, id) {
     currentFlight = allFlights[day].flights[id]
-    console.log(currentFlight)
+    // console.log(currentFlight)
 }
 
 
 function setup() {
+    // frameRate(30);
     let cnv = createCanvas(mapWidth, mapHeight);
     cnv.parent('myContainer');
+    background(bg);
 
-    //   background(0);
 
-    console.log(allFlights)
-    // getFlightData("20210815", "684304472")
+
+    // console.log(allFlights)
+    
     // getFlightData("20210815","684284307")
 
-    
+
     // noLoop()
 
     //2d array
@@ -94,23 +96,27 @@ function setup() {
             }
         }
     }
+    // getFlightData("20210815", "684304472")  //maybe?
+    drawFlight();
+    // console.log("LOADED");
 
-    
+
 }
 
 
-// function mousePressed() {
-//     if (flightSelector < flightArray[daySelector].length - 1) {
-//         flightSelector++;
-//         console.log(flightSelector);
-//     } else {
-//         flightSelector = 0
-//         if (daySelector < dayArray.length - 1) {
-//             daySelector++;
-//         }
-//     }
-//     getFlightData(dayArray[daySelector], flightArray[daySelector][flightSelector]);
-// }
+function drawFlight() {
+    // background(bg); // re-draw background every flight
+    if (flightSelector < flightArray[daySelector].length - 1) {
+        flightSelector++;
+        console.log(flightSelector);
+    } else {
+        flightSelector = 0
+        if (daySelector < dayArray.length - 1) {
+            daySelector++;
+        }
+    }
+    getFlightData(dayArray[daySelector], flightArray[daySelector][flightSelector]);
+}
 
 // for(let flightSelector = 0; flightSelector < flightArray[daySelector].length - 1; flightSelector++){
 //     getFlightData(dayArray[daySelector], flightArray[daySelector][flightSelector]);
@@ -121,15 +127,16 @@ function setup() {
 
 
 function draw() {
-    background(bg);
+
     noFill()
     stroke("red")
+    
     strokeWeight(3);
 
 
     if (currentFlight) {
 
-        beginShape()
+        beginShape();
         if (pointCount < currentFlight.route.length) {
             for (let i = 0; i < pointCount; i++) {
 
@@ -143,20 +150,13 @@ function draw() {
                     vertex(x, y)
                 }
             }
-            pointCount++
+            pointCount++;
 
 
-            endShape()
+            endShape();
         } else {
             pointCount = 0;
+            drawFlight();
         }
     }
- for (let daySelector = 0; daySelector < dayArray.length; daySelector++) {
-        for (let flightSelector = 0; flightSelector < flightArray[daySelector].length; flightSelector++) {
-          getFlightData(dayArray[daySelector], flightArray[daySelector][flightSelector]);
-        }
-       
-      }
-
-
 }
