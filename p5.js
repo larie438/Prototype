@@ -103,7 +103,6 @@ function setup() {
 
 }
 
-
 function drawFlight() {
     // background(bg); // re-draw background every flight
     if (flightSelector < flightArray[daySelector].length - 1) {
@@ -113,6 +112,7 @@ function drawFlight() {
         flightSelector = 0
         if (daySelector < dayArray.length - 1) {
             daySelector++;
+            background(bg);
         }
     }
     getFlightData(dayArray[daySelector], flightArray[daySelector][flightSelector]);
@@ -122,16 +122,12 @@ function drawFlight() {
 //     getFlightData(dayArray[daySelector], flightArray[daySelector][flightSelector]);
 // }
 
-
-
-
-
 function draw() {
 
     noFill()
     stroke("red")
     
-    strokeWeight(3);
+    strokeWeight(1);
 
 
     if (currentFlight) {
