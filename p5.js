@@ -9,12 +9,14 @@ let pointCount = 0;
 let daySelector = 0;
 let flightSelector = 0;
 
+let cnv;
+
 //these values can be pulled from attributes of objects like images and videos, they're just hard-coded here since the example is using a rectangle
 let assetWidth = 1800;
 let assetHeight = 1200;
 
 //variables to hold aspect ratios and output coords and size
-let assetRatio = assetWidth/assetHeight;
+let assetRatio = assetWidth / assetHeight;
 let canvasRatio;
 let assetDisplayW;
 let assetDisplayH;
@@ -22,9 +24,9 @@ let assetX;
 let assetY;
 
 const edges = {
-    minLong: 68.482095,
+    minLong: 68.44000,
     maxLong: 69.93296,
-    minLat: 34.22276,
+    minLat: 34.26000,
     maxLat: 34.906933,
 }
 
@@ -78,7 +80,7 @@ function getFlightData(day, id) {
 
 function setup() {
     // frameRate(30);
-    let cnv = createCanvas(mapWidth, mapHeight);
+    cnv = createCanvas(mapWidth, mapHeight);
     cnv.parent('myContainer');
     background(bg);
 
@@ -108,7 +110,7 @@ function drawFlight() {
     // background(bg); // re-draw background every flight
     if (flightSelector < flightArray[daySelector].length - 1) {
         flightSelector++;
-// if i want random colors insert here and use hsb color spece
+        // if i want random colors insert here and use hsb color spece
         console.log(flightSelector);
     } else {
         flightSelector = 0
@@ -125,7 +127,7 @@ function draw() {
 
     noFill()
     stroke("red")
-    
+
     strokeWeight(1);
 
     if (currentFlight) {
@@ -136,8 +138,8 @@ function draw() {
 
                 const routePoint = currentFlight.route[i]
 
-                let x = map(routePoint.longitude, edges.minLong, edges.maxLong, 0, width)
-                let y = map(routePoint.latitude, edges.maxLat, edges.minLat, 0, height)
+                let x = map(routePoint.longitude, edges.minLong, edges.maxLong, assetX, assetX + assetDisplayW)
+                let y = map(routePoint.latitude, edges.maxLat, edges.minLat, assetY, assetY + assetDisplayH)
 
 
                 if (x >= 0 && x <= width && y >= 0 && y <= height) {
@@ -154,34 +156,33 @@ function draw() {
         }
     }
 
-//recalculate canvas aspect ratio in the draw function so that it can update if the canvas is resized
-  canvasRatio = width/height;
-  
-//compare canvas and asset aspect ratios to determine whether we need to "letterbox" on the top/bottom, or sides
-  if (assetRatio > canvasRatio){//letterbox on top and bottom
-    assetDisplayW = width;
-    assetDisplayH = width / assetRatio;
-  }
-  else{//letterbox on sides
-    assetDisplayH = height;
-    assetDisplayW = height * assetRatio;
-  }
-  
-//calculate the coords of top left corner
-  assetX = (width-assetDisplayW)/2;
-  assetY = (height-assetDisplayH)/2;
-  console.log(assetDisplayW);
+    //recalculate canvas aspect ratio in the draw function so that it can update if the canvas is resized
+    canvasRatio = width / height;
+
+    //compare canvas and asset aspect ratios to determine whether we need to "letterbox" on the top/bottom, or sides
+    if (assetRatio > canvasRatio) { //letterbox on top and bottom
+        assetDisplayW = width;
+        assetDisplayH = width / assetRatio;
+    } else { //letterbox on sides
+        assetDisplayH = height;
+        assetDisplayW = height * assetRatio;
+    }
+
+    //calculate the coords of top left corner
+    assetX = (width - assetDisplayW) / 2;
+    assetY = (height - assetDisplayH) / 2;
 }
 
 //enter fullscreen when spacebar (keycode 32) is pressed
 function keyPressed() {
     if (keyCode == 32) {
-      let fs = fullscreen();
-      fullscreen(!fs);
+        let fs = fullscreen();
+        fullscreen(!fs);
     }
-  }
-  
+}
+
 //resize canvas if window changes size
-  function windowResized() {
+function windowResized() {
     resizeCanvas(windowWidth, windowHeight);
-  }
+    image(bg, assetX, assetY, assetDisplayW, assetDisplayH);
+}
