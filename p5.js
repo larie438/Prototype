@@ -142,7 +142,7 @@ function draw() {
                 let y = map(routePoint.latitude, edges.maxLat, edges.minLat, assetY, assetY + assetDisplayH)
 
 
-                if (x >= 0 && x <= width && y >= 0 && y <= height) {
+                if (x >= 0 && x <= assetX + assetDisplayW && y >= 0 && y <= assetY + assetDisplayH) {
                     vertex(x, y)
                 }
             }
