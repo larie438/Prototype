@@ -1,5 +1,5 @@
-const mapWidth = 1000;
-const mapHeight = 600;
+const mapWidth = 1800;
+const mapHeight = 1200;
 let bg;
 
 let dayArray = [];
@@ -8,6 +8,18 @@ let pointCount = 0;
 
 let daySelector = 0;
 let flightSelector = 0;
+
+//these values can be pulled from attributes of objects like images and videos, they're just hard-coded here since the example is using a rectangle
+let assetWidth = 1800;
+let assetHeight = 1200;
+
+//variables to hold aspect ratios and output coords and size
+let assetRatio = assetWidth/assetHeight;
+let canvasRatio;
+let assetDisplayW;
+let assetDisplayH;
+let assetX;
+let assetY;
 
 const edges = {
     minLong: 68.482095,
@@ -64,19 +76,11 @@ function getFlightData(day, id) {
     // console.log(currentFlight)
 }
 
-
 function setup() {
     // frameRate(30);
     let cnv = createCanvas(mapWidth, mapHeight);
     cnv.parent('myContainer');
     background(bg);
-
-
-
-    // console.log(allFlights)
-    
-    // getFlightData("20210815","684284307")
-
 
     // noLoop()
 
@@ -96,31 +100,26 @@ function setup() {
             }
         }
     }
-    // getFlightData("20210815", "684304472")  //maybe?
     drawFlight();
     // console.log("LOADED");
-
-
 }
 
 function drawFlight() {
     // background(bg); // re-draw background every flight
     if (flightSelector < flightArray[daySelector].length - 1) {
         flightSelector++;
+// if i want random colors insert here and use hsb color spece
         console.log(flightSelector);
     } else {
         flightSelector = 0
         if (daySelector < dayArray.length - 1) {
             daySelector++;
-            background(bg);
+            // background(bg);
+            image(bg, assetX, assetY, assetDisplayW, assetDisplayH);
         }
     }
     getFlightData(dayArray[daySelector], flightArray[daySelector][flightSelector]);
 }
-
-// for(let flightSelector = 0; flightSelector < flightArray[daySelector].length - 1; flightSelector++){
-//     getFlightData(dayArray[daySelector], flightArray[daySelector][flightSelector]);
-// }
 
 function draw() {
 
@@ -128,7 +127,6 @@ function draw() {
     stroke("red")
     
     strokeWeight(1);
-
 
     if (currentFlight) {
 
@@ -155,4 +153,35 @@ function draw() {
             drawFlight();
         }
     }
+
+//recalculate canvas aspect ratio in the draw function so that it can update if the canvas is resized
+  canvasRatio = width/height;
+  
+//compare canvas and asset aspect ratios to determine whether we need to "letterbox" on the top/bottom, or sides
+  if (assetRatio > canvasRatio){//letterbox on top and bottom
+    assetDisplayW = width;
+    assetDisplayH = width / assetRatio;
+  }
+  else{//letterbox on sides
+    assetDisplayH = height;
+    assetDisplayW = height * assetRatio;
+  }
+  
+//calculate the coords of top left corner
+  assetX = (width-assetDisplayW)/2;
+  assetY = (height-assetDisplayH)/2;
+  console.log(assetDisplayW);
 }
+
+//enter fullscreen when spacebar (keycode 32) is pressed
+function keyPressed() {
+    if (keyCode == 32) {
+      let fs = fullscreen();
+      fullscreen(!fs);
+    }
+  }
+  
+//resize canvas if window changes size
+  function windowResized() {
+    resizeCanvas(windowWidth, windowHeight);
+  }
