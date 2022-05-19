@@ -36,7 +36,7 @@ let currentFlight = null
 
 function preload() {
 
-    bg = loadImage('assets/map.png');
+    bg = loadImage('assets/map_small.png');
 
     loadJSON("/data/allDays.json", function (days) {
 
